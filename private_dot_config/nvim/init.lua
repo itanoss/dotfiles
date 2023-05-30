@@ -12,17 +12,19 @@ require("fidget").setup()
 require("telescope").setup()
 require("nvim-tree").setup()
 
+local on_attach_keys = function(_, bufnr)
+  -- Hover actions
+  vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+  -- Code action groups
+  vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+end
+
 -- rust-tool
 local rt = require("rust-tools")
 
 rt.setup({
   server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
+    on_attach = on_attach_keys,
     settings = {
       ["rust-analyer"] = {
         checkOnSave = {
@@ -104,7 +106,7 @@ cmp.setup.cmdline(':', {
 
 -- treesitter
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "lua", "rust", "toml" },
+  ensure_installed = { "lua", "rust", "toml", "dart" },
   auto_install = true,
   highlight = {
     enable = true,
@@ -115,7 +117,10 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     extended_mode = true,
     max_file_lines = nil,
-  }
+  },
+  indent = {
+    enable = true,
+  },
 }
 
 -- telescope
@@ -150,9 +155,18 @@ null_ls.setup({
                 buffer = bufnr,
                 callback = function()
                     -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                    vim.lsp.buf.formatting_sync()
+                    vim.lsp.buf.format({ bufnr = bufnr })
+                    -- before 0.8, vim.lsp.buf.formatting_sync()
                 end,
             })
         end
     end,
 })
+
+-- flutter-tools
+require("flutter-tools").setup {
+  on_attach = on_attach_keys,
+}
+
+-- refactoring
+require('refactoring').setup()

@@ -39,5 +39,11 @@ vim.o.timeoutlen = 300
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.shiftwidth = 0
+vim.opt.tabstop = 2
+vim.opt.softtabstop = -1
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

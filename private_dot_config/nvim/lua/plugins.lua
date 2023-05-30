@@ -23,6 +23,8 @@ return require('packer').startup(function(use)
     "jose-elias-alvarez/null-ls.nvim"
   }
 
+  use "lukas-reineke/indent-blankline.nvim"
+
   use 'simrat39/rust-tools.nvim'
 
   use {
@@ -61,4 +63,21 @@ return require('packer').startup(function(use)
       require("which-key").setup()
     end
   }
+
+  use {
+    'akinsho/flutter-tools.nvim',
+    requires = {
+        'nvim-lua/plenary.nvim',
+        'stevearc/dressing.nvim', -- optional for vim.ui.select
+    },
+  }
+
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    requires = {
+        {"nvim-lua/plenary.nvim"},
+        {"nvim-treesitter/nvim-treesitter"}
+    }
+  }
 end)
+
