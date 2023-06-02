@@ -143,8 +143,9 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
 
 null_ls.setup({
-    source = {
+    sources = {
        null_ls.builtins.formatting.rustfmt,
+       null_ls.builtins.formatting.dart_format,
     },
     -- you can reuse a shared lspconfig on_attach callback here
     on_attach = function(client, bufnr)
